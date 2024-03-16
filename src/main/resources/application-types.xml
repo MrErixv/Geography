@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="input" format="json">
+      <types:shape format="weave" example="examples/Example-1.json"><![CDATA[%dw 2.0
+
+type input = {|
+  data: Array<{|    code: String,     currencyCodes: Array<String>, 
+    name: String, 
+    wikiDataId: String
+  |}>, 
+  links: Array<{|    rel: String,     href: String  |}>, 
+  metadata: {|
+    currentOffset: Number {"typeId": "int"}, 
+    totalCount: Number {"typeId": "int"}
+  |}
+|} {"example": "{\\\"data\\\":[{\\\"code\\\":\\\"AF\\\",\\\"currencyCodes\\\":[\\\"AFN\\\"],\\\"name\\\":\\\"Afghanistan\\\",\\\"wikiDataId\\\":\\\"Q889\\\"},{\\\"code\\\":\\\"AL\\\",\\\"currencyCodes\\\":[\\\"ALL\\\"],\\\"name\\\":\\\"Albania\\\",\\\"wikiDataId\\\":\\\"Q222\\\"},{\\\"code\\\":\\\"DZ\\\",\\\"currencyCodes\\\":[\\\"DZD\\\"],\\\"name\\\":\\\"Algeria\\\",\\\"wikiDataId\\\":\\\"Q262\\\"},{\\\"code\\\":\\\"AD\\\",\\\"currencyCodes\\\":[\\\"EUR\\\"],\\\"name\\\":\\\"Andorra\\\",\\\"wikiDataId\\\":\\\"Q228\\\"},{\\\"code\\\":\\\"AO\\\",\\\"currencyCodes\\\":[\\\"AOA\\\"],\\\"name\\\":\\\"Angola\\\",\\\"wikiDataId\\\":\\\"Q916\\\"}],\\\"links\\\":[{\\\"rel\\\":\\\"first\\\",\\\"href\\\":\\\"\\/v1\\/geo\\/countries?offset=0&limit=5\\\"},{\\\"rel\\\":\\\"next\\\",\\\"href\\\":\\\"\\/v1\\/geo\\/countries?offset=5&limit=5\\\"},{\\\"rel\\\":\\\"last\\\",\\\"href\\\":\\\"\\/v1\\/geo\\/countries?offset=195&limit=5\\\"}],\\\"metadata\\\":{\\\"currentOffset\\\":0,\\\"totalCount\\\":199}}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="new" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#3bd7f8e3-a4f1-4dc2-8d80-d5adb46192bc">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="input"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

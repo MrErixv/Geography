@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e3d56f71-f370-47be-a407-9ad0356e8038" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="geoFlow" doc:id="651801db-5b61-48f6-b7cb-cec01004f963" >
+		<http:listener doc:name="Listener" doc:id="169a4583-3322-4594-bbc0-dfff96772a50" config-ref="HTTP_Listener_config" path="/geo"/>
+		<ee:transform doc:name="Transform Message" doc:id="3bd7f8e3-a4f1-4dc2-8d80-d5adb46192bc" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	test: 1,
+	test2: 2
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="GET" doc:name="Request" doc:id="a5c62131-dcbd-4c27-b370-c552639eac90" url="https://wft-geo-db.p.rapidapi.com/v1/geo/countries">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"X-RapidAPI-Host" : "wft-geo-db.p.rapidapi.com",
+	"X-RapidAPI-Key" : "6cf0c88c2fmsh90ce9352dab1052p1729cfjsnb1bdb426aab9"
+}]]]></http:headers>
+		</http:request>
+	</flow>
+</mule>
