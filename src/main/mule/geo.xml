@@ -26,7 +26,7 @@ output application/java
 ---
 {
 	"X-RapidAPI-Host" : "wft-geo-db.p.rapidapi.com",
-	"X-RapidAPI-Key" : "6cf0c88c2fmsh90ce9352dab1052p1729cfjsnb1bdb426aab9"
+	"X-RapidAPI-Key" : ""
 }]]]></http:headers>
 		</http:request>
 	</flow>
